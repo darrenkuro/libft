@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 03:53:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/16 08:59:33 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/16 13:31:10 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
+#include <stddef.h>
 
-	i = -1;
-	while (s[++i])
-		;
-	if (c == '\0')
-		return ((char *) &s[i]);
-	while (--i >= 0)
-		if (s[i] == c)
-			return ((char *) &s[i]);
-	return ((void *) 0);
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+
 }

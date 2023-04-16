@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 03:53:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/16 08:59:33 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/16 13:23:32 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/16 13:27:24 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strrchr(const char *s, int c)
+#include <stddef.h>
+
+void	*ft_memset(void *b, int c, size_t len)
 {
 	int	i;
 
 	i = -1;
-	while (s[++i])
-		;
-	if (c == '\0')
-		return ((char *) &s[i]);
-	while (--i >= 0)
-		if (s[i] == c)
-			return ((char *) &s[i]);
-	return ((void *) 0);
+	while (++i < len)
+		b[i] = c;
+	return (b);
 }
