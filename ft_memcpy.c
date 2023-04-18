@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:31:19 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/18 04:07:53 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/18 04:21:13 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	size_t	i;
 
 	i = 0;
-	i = n++;
-	(void)src;
-	//(void)n, src++;
-	//while (++i <= n + 100)
-	//	*(char *) dst++ = *(char *) src;
-	return (dst + i - i);
+	while (++i <= n)
+		*(char *) dst++ = *(char *) src++;
+	return (dst - i + 1);
 }
