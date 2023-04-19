@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:23:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/16 13:27:24 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/19 19:25:03 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-	int	i;
+	size_t	i;
 
-	i = -1;
-	while (++i < len)
-		b[i] = c;
+	i = 0;
+	while (i < len)
+		((char *) b)[i++] = c;
 	return (b);
 }
