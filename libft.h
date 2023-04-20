@@ -6,12 +6,14 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 22:28:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/18 03:14:08 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/21 01:48:37 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# include <stddef.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
