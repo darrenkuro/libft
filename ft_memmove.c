@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 21:01:31 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/16 13:31:19 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/19 22:35:14 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < n)
-		if (((char *) s)[i++] == c)
-			return ((void *)s + --i);
-	return ((void *) 0);
+	while (++i <= n)
+		*(char *) dst++ = *(char *) src++;
+	return (dst - i + 1);
 }

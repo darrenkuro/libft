@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 21:01:31 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/16 12:11:21 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/16 13:22:24 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-void	*ft_memchr(const void *s, int c, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-		if (((char *) s)[i++] == c)
-			return ((void *)s + --i);
-	return ((void *) 0);
+	while (n > 0 && *s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n == 0)
+		return (0);
+	return (*s1 - *s2);
 }

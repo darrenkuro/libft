@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 21:01:31 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/21 00:38:11 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/21 01:20:25 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-void	*ft_memchr(const void *s, int c, size_t n)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
-	while (i < n)
-		if (((char *) s)[i++] == c)
-			return ((void *)s + --i);
-	return ((void *) 0);
+	while (s[i] && ++i)
+		f(i - 1, &s[i - 1]);
 }
+
+/* ////
+void	ft_striteri_a(unsigned int i, char *s)
+{
+	if (i < 5)
+		*s = 'a';
+}
+
+#include <stdio.h>
+
+int	main(void)
+{
+	char	test[8] = "abcdefg";
+
+	ft_striteri(test, ft_striteri_a);
+	printf("%s\n", test);
+
+	return (0);
+}
+*/ ////

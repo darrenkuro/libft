@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 21:01:31 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/16 13:23:32 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/19 22:38:19 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < n)
-		if (((char *) s)[i++] == c)
-			return ((void *)s + --i);
-	return ((void *) 0);
+	while (i < len)
+		((char *) s)[i++] = 0;
 }

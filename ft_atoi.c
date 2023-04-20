@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:29:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 21:01:31 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/20 03:44:30 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/20 03:50:01 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-void	*ft_memchr(const void *s, int c, size_t n)
+int	ft_atoi(const char *str)
 {
-	size_t	i;
+	int	num;
+	int	neg;
 
-	i = 0;
-	while (i < n)
-		if (((char *) s)[i++] == c)
-			return ((void *)s + --i);
-	return ((void *) 0);
+	num = 0;
+	while (*str == ' ' || *str == '\t')
+		++str;
+	if (*str == '+' && ++str)
+		neg = 1;
+	else if (*str == '-' && ++str)
+		neg = -1;
+	while (*str >= '0' && *str <= '9')
+		num = num * 10 + (*str - '0');
+	return (neg * num);
 }
