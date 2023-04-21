@@ -7,7 +7,8 @@ SRC=ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 	ft_strdup.c ft_strlcat.c ft_strlcpy.c
 SRC_REST=ft_strncmp.c ft_strnstr.c ft_strlcpy.c ft_strlcat.c ft_strdup.c \
 	ft_bzero.c ft_atoi.c ft_calloc.c
-SRC_BONUS=
+SRC_BONUS=ft_lstnew.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c \
+	ft_lstlast.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c
 CC=cc
 RM=/bin/rm -f
 CFLAGS=-Wall -Wextra -Werror
@@ -27,7 +28,7 @@ bonus: $(OBJ) $(OBJ_BONUS)
 	$(AR) $(NAME) $^
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
 	$(RM) $(NAME)
