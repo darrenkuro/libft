@@ -6,9 +6,11 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 03:44:30 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/20 03:50:01 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/21 03:56:30 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define BASE 10
 
 int	ft_atoi(const char *str)
 {
@@ -16,13 +18,14 @@ int	ft_atoi(const char *str)
 	int	neg;
 
 	num = 0;
-	while (*str == ' ' || *str == '\t')
+	neg = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		++str;
 	if (*str == '+' && ++str)
-		neg = 1;
+		;
 	else if (*str == '-' && ++str)
 		neg = -1;
-	while (*str >= '0' && *str <= '9')
-		num = num * 10 + (*str - '0');
+	while ((*str >= '0' && *str <= '9') && ++str)
+		num = num * BASE + (*(str - 1) - '0');
 	return (neg * num);
 }

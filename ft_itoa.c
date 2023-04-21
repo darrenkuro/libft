@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 03:42:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 01:10:28 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/21 04:03:07 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static size_t	ft_itoa_len(int n)
 
 	len = 1;
 	if (n == 0)
-		return (++len);
+		return (len + 1);
 	if (n == INT_MIN)
 		return (INT_MIN_LEN);
 	if (n < 0 && ++len)
@@ -58,12 +58,15 @@ char	*ft_itoa(int n)
 
 /* ////
 #include <stdio.h>
+#include <string.h>
 int	main()
 {
 	printf("%s\n", ft_itoa(-2147483648));
+	printf("%s\n", ft_itoa(2147483647));
 	printf("%s\n", ft_itoa(-8));
 	printf("%s\n", ft_itoa(-0));
-	printf("%s\n", ft_itoa(2579));
+	printf("%s\n", ft_itoa(-623));
+	printf("%d\n", strcmp(ft_itoa(-0), "0"));
 	return (0);
 }
 */ ////

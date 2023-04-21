@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 13:23:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 03:04:12 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/21 01:55:02 by dlu               #+#    #+#             */
+/*   Updated: 2023/04/21 01:58:16 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-		((char *) s)[i++] = 0;
+	if (s)
+	{
+		ft_putstr_fd(s, fd);
+		ft_putstr_fd("\n", fd);
+	}
 }
