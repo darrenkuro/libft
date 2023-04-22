@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 03:42:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 06:34:26 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/22 18:02:49 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_itoa(int n)
 #include <string.h>
 int	main()
 {
-	char *abc =ft_itoa(2147483647);
+	char *abc =ft_itoa(-666);
 
 	printf("%s\n", ft_itoa(-2147483648));
 	printf("%s\n", ft_itoa(2147483647));
@@ -65,7 +65,7 @@ int	main()
 	printf("%s\n", ft_itoa(-0));
 	printf("%s\n", ft_itoa(-620));
 	printf("%d\n", strcmp(ft_itoa(-0), "0"));
-	if (atoi(abc) == 2147483647)
+	if (atoi(abc) == -666)
 		printf("ok!\n");
 	return (0);
 }
