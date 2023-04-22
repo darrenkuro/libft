@@ -6,21 +6,19 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:53:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/18 03:29:54 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/22 19:06:07 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
-	i = -1;
-	while (s[++i])
-		;
-	if (c == '\0')
-		return ((char *) &s[i]);
+	i = (int) ft_strlen(s) + 1;
 	while (--i >= 0)
 		if (s[i] == c)
 			return ((char *) &s[i]);
-	return ((void *) 0);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 06:39:40 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 06:44:12 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/22 18:18:17 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (lst)
-	{
-		new->next = *lst;
-		*lst = new;
-	}
+	if (!lst)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }

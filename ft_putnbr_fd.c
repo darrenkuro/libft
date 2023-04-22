@@ -6,19 +6,21 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 01:58:27 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 02:19:24 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/22 18:47:11 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
+#include <limits.h>
 
-#define INT_MIN -2147483648
-#define INT_MIN_STR "-2147483648"
 #define BASE 10
+#define INT_MIN_STR "-2147483648"
 
 void	ft_putnbr_fd(int n, int fd)
 {
+	if (fd < 0)
+		return ;
 	if (n == INT_MIN)
 		ft_putstr_fd(INT_MIN_STR, fd);
 	else if (n < 0)

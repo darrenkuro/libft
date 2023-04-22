@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 01:37:02 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 01:51:40 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/22 18:47:56 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
+	if (!s || fd < 0)
+		return ;
+	write(fd, s, ft_strlen(s));
 }
 
 /* ////
