@@ -6,11 +6,11 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:19:56 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/22 18:55:51 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:29:53 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
 char	*ft_strchr(const char *s, int c)
 {

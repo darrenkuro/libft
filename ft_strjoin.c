@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 10:07:07 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 11:33:50 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:31:27 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcat(str, s2, len);
 	return (str);
 }
-
-/* ////
-#include <stdio.h>
-int	main()
-{
-	printf("%s\n", ft_strjoin("\0", "\0"));
-	return (0);
-}
-*/ ////

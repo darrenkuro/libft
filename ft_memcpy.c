@@ -6,11 +6,11 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:31:19 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/22 18:34:19 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:42:20 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -20,6 +20,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	if (!dst && !src)
 		return (NULL);
 	while (++i <= n)
-		*(char *) dst++ = *(char *) src++;
+		*(t_uc *) dst++ = *(t_uc *) src++;
 	return (dst - i + 1);
 }

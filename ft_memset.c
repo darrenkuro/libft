@@ -6,11 +6,11 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:23:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/19 19:25:03 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:43:04 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
 void	*ft_memset(void *b, int c, size_t len)
 {
@@ -18,6 +18,6 @@ void	*ft_memset(void *b, int c, size_t len)
 
 	i = 0;
 	while (i < len)
-		((char *) b)[i++] = c;
+		((t_uc *) b)[i++] = c;
 	return (b);
 }

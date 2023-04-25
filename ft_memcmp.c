@@ -6,13 +6,11 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 12:11:21 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/22 18:35:54 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:41:55 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-typedef unsigned char	t_uc;
+#include "libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {

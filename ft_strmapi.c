@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 00:26:30 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 03:26:06 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:46:13 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*ret;
-	unsigned int	i;
+	char	*ret;
+	int		i;
 
-	i = 0;
+	i = -1;
 	if (!s)
 		return (NULL);
 	ret = (char *) malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!ret)
 		return (NULL);
-	while (s[i] && ++i)
-		ret[i - 1] = f(i - 1, s[i - 1]);
+	while (s[++i])
+		ret[i] = f((t_ui) i, s[i]);
 	ret[i] = '\0';
 	return (ret);
 }

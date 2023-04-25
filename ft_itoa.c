@@ -6,15 +6,15 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 03:42:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/25 20:21:24 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:18:35 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <limits.h>
 
-#define INT_MIN_LEN 12
-#define BASE 10
+#define INT_MIN_LEN	12
+#define BASE		10
 
 /* Return the length of itoa string, including the '\0'. */
 static size_t	ft_itoa_len(int n)

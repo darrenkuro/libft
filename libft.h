@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 22:28:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/23 04:08:48 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:46:02 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+typedef unsigned char	t_uc;
+typedef unsigned int	t_ui;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

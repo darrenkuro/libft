@@ -6,17 +6,17 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 00:38:11 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/23 17:33:38 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 01:46:32 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	unsigned int	i;
+	int	i;
 
-	i = 0;
-	while (s[i++])
-		f(i - 1, &s[i - 1]);
+	i = -1;
+	while (s[++i])
+		f((t_ui) i, &s[i]);
 }
 
 /* ////
