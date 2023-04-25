@@ -6,11 +6,15 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 03:42:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/22 18:02:49 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/25 20:21:24 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <limits.h>
+
+#define INT_MIN_LEN 12
+#define BASE 10
 
 /* Return the length of itoa string, including the '\0'. */
 static size_t	ft_itoa_len(int n)
@@ -20,21 +24,21 @@ static size_t	ft_itoa_len(int n)
 	len = 1;
 	if (n == 0)
 		return (++len);
-	if (n == -2147483648)
-		return (12);
+	if (n == INT_MIN)
+		return (INT_MIN_LEN);
 	if (n < 0 && ++len)
 		n = -n;
 	while (n > 0 && ++len)
-		n /= 10;
+		n /= BASE;
 	return (len);
 }
 
 char	*ft_itoa(int n)
 {
 	char	*num;
-	size_t	len;
+	int		len;
 
-	len = ft_itoa_len(n);
+	len = (int) ft_itoa_len(n);
 	num = (char *) malloc(len * sizeof(char));
 	if (!num)
 		return (NULL);
@@ -44,29 +48,10 @@ char	*ft_itoa(int n)
 	while (--len >= 0 && num[len] != '-')
 	{
 		if (n > 0)
-			num[len] = n % 10 + '0';
+			num[len] = n % BASE + '0';
 		else
-			num[len] = -(n % 10) + '0';
-		n /= 10;
+			num[len] = -(n % BASE) + '0';
+		n /= BASE;
 	}
 	return (num);
 }
-
-/* ////
-#include <stdio.h>
-#include <string.h>
-int	main()
-{
-	char *abc =ft_itoa(-666);
-
-	printf("%s\n", ft_itoa(-2147483648));
-	printf("%s\n", ft_itoa(2147483647));
-	printf("%s\n", ft_itoa(-8));
-	printf("%s\n", ft_itoa(-0));
-	printf("%s\n", ft_itoa(-620));
-	printf("%d\n", strcmp(ft_itoa(-0), "0"));
-	if (atoi(abc) == -666)
-		printf("ok!\n");
-	return (0);
-}
-*/ ////
