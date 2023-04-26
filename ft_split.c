@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 10:47:37 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 11:39:28 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 05:31:48 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,66 +15,58 @@
 
 static int	ft_split_count(char const *s, char c)
 {
-	int		count;
-	int		len;
-	char	*trimmed;
-	char	sep[2];
+	int	count;
+	int	len;
+	int	i;
 
-	sep[0] = c;
-	sep[1] = '\0';
-	trimmed = ft_strtrim(s, sep);
 	count = 1;
-	if (!trimmed)
-		return (count);
 	len = 0;
-	while (*trimmed)
+	i = -1;
+	if (!s || !*s)
+		return (count);
+	while (s[++i])
 	{
-		if (*trimmed != c)
+		if (s[i] != c)
 			++len;
-		else if (len && *trimmed == c && ++count)
+		else if (len && s[i] == c && ++count)
 			len = 0;
-		++trimmed;
 	}
-	free(trimmed);
-	return (++count);
+	if (s[i - 1] == c)
+		return (count);
+	else
+		return (count + 1);
 }
-/*
+
+static int	ft_split_create(char ***ret, char const *s, int i, int len)
+{
+	**ret = ft_substr(&s[i - len], 0, len);
+	(*ret)++;
+	return (1);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**ret;
 	int		len;
 	int		i;
-	char	*trimmed;
-	char	sep[2];
 
-	if (!s)
-		return (NULL);
 	ret = (char **) malloc(ft_split_count(s, c) * sizeof(char *));
 	if (!ret)
 		return (NULL);
-	sep[0] = c;
-	sep[1] = '\0';
+	*ret = NULL;
 	len = 0;
 	i = -1;
-	trimmed = ft_strtrim(s, sep);
-	while (trimmed[++i])
+	if (!s || !*s)
+		return (ret);
+	while (s[++i])
 	{
-		if (trimmed[i] != c)
+		if (s[i] != c)
 			++len;
-		//else if (len && trimmed[i] == c)
-			*ret++ = ft_substr(&trimmed[i], 0, len);
+		else if (len && s[i] == c && ft_split_create(&ret, s, i, len))
+			len = 0;
 	}
-	*ret++ = ft_substr(&trimmed[i - len], 0, len);
-	*ret = NULL;
-	free(trimmed);
-	return (ret - ft_split_count(s, c) + 1);
+	if (s[i - 1] != c)
+		*ret++ = ft_substr(&s[i - len], 0, len);
+	*ret++ = NULL;
+	return (ret - ft_split_count(s, c));
 }
-*/
-#include <stdio.h>
-int	main(void)
-{
-	
-	printf("%d\n", ft_split_count("test a", ' '));
-	return (0);
-}
-

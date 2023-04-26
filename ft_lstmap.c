@@ -6,12 +6,16 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 07:38:27 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 07:44:32 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 05:43:55 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-{	
+{
+	while (lst)
+	{
+		
+	}
 }
