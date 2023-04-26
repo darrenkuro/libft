@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 10:13:39 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/21 10:46:04 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 04:39:38 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = ft_strlen(s1) - 1;
 	while (s1[start] && ft_strchr(set, s1[start]))
 		++start;
-	while (s1[end] && ft_strchr(set, s1[end]))
+	while (s1[end] && ft_strchr(set, s1[end]) && end > 0)
 		--end;
 	if (start > end + 1)
 		return (ft_strdup(""));

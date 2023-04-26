@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 05:24:31 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/26 01:33:36 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 03:38:14 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
+	size_t	i;
 
 	i = -1;
-	while (dstsize-- > 0 && src[++i])
+	if (!dstsize)
+		return (ft_strlen(src));
+	while (++i < dstsize - 1 && src[i])
 		dst[i] = src[i];
-	if (dstsize)
-		dst[i] = '\0';
+	dst[i] = '\0';
 	return (ft_strlen(src));
 }

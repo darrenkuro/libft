@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 02:33:17 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/26 01:17:27 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 03:44:42 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	size_t	dst_len;
 	size_t	src_len;
 
-	if (!dst && dstsize == 0)
-		return (0);
-	dst_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
-	if (dstsize <= dst_len + 1)
+	if (!dst && dstsize == 0)
+		return (src_len);
+	dst_len = ft_strlen(dst);
+	if (dstsize < dst_len + 1)
 		return (src_len + dstsize);
 	dstsize -= dst_len;
 	dst += dst_len;

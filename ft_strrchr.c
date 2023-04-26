@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 03:53:50 by dlu               #+#    #+#             */
-/*   Updated: 2023/04/22 19:06:07 by dlu              ###   ########.fr       */
+/*   Updated: 2023/04/26 03:23:03 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strrchr(const char *s, int c)
 
 	i = (int) ft_strlen(s) + 1;
 	while (--i >= 0)
-		if (s[i] == c)
+		if (s[i] == (char) c)
 			return ((char *) &s[i]);
 	return (NULL);
 }
