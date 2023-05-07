@@ -5,7 +5,9 @@
 <p align="center">
     <img alt="size" src="https://img.shields.io/tokei/lines/github/darrenkuro/42_libft">
 </p>
-
+<p align="center">
+    <img alt="score" src="https://badge42.vercel.app/api/v2/clhcmu90l002108mts40mykbj/project/3081844">
+</p>
 This repo contains files for the libft project for 42 cursus. 
 
 `Submitted` directory contains the version of the files turned in and passed all the tests as for May 2nd, 2023. There are, however, some known issues for edge cases (malloc failing in the middle of `ft_split`) and optimization failures (i.e. allocating more memory than it needs to.)
