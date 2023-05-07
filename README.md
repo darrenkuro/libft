@@ -1,6 +1,10 @@
-# LIBFT
+<h1 align="center">
+	libft
+</h1>
 
-https://img.shields.io/tokei/lines/github/darrenkuro/42_libft
+<p align="center">
+    <img alt="size" src="https://img.shields.io/tokei/lines/github/darrenkuro/42_libft">
+</p>
 
 This repo contains files for the libft project for 42 cursus. 
 
