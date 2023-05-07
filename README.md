@@ -1,7 +1,5 @@
 <h1 align="center">LIBFT</h1>
 
-This repo contains files for the libft project for 42 cursus. 
-
 <p align="center">
     <img alt="passed" src="https://img.shields.io/static/v1?label=passed&message=125/100&color=brightgreen&logo=42&logoColor=green">
     <img alt="size" src="https://img.shields.io/github/languages/code-size/darrenkuro/42_ft_printf?color=red">
@@ -10,7 +8,7 @@ This repo contains files for the libft project for 42 cursus.
     <img alt="commit" src="https://img.shields.io/github/last-commit/darrenkuro/42_libft?color=orange">
 </p>
 
----
+This repo contains files for the libft project for 42 cursus. 
 
 `Submitted` directory contains the version of the files turned in and passed all the tests as for May 2nd, 2023. There are, however, some known issues for edge cases (malloc failing in the middle of `ft_split`) and optimization failures (i.e. allocating more memory than it needs to.)
 
