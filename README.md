@@ -1,7 +1,7 @@
 <h1 align="center">LIBFT</h1>
 
 <p align="center">
-    <img alt="passed" src="https://img.shields.io/static/v1?label=passed&message=125/100&color=brightgreen&logo=42&logoColor=green">
+    <img alt="score" src="https://img.shields.io/static/v1?label=score&message=125/100&color=brightgreen&logo=42&logoColor=green">
     <img alt="size" src="https://img.shields.io/github/languages/code-size/darrenkuro/42_ft_printf">
     <img alt="loc" src="https://img.shields.io/tokei/lines/github/darrenkuro/42_libft">
     <img alt="file" src="https://img.shields.io/github/directory-file-count/darrenkuro/42_libft/Submitted?label=files%20submitted">
