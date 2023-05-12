@@ -18,3 +18,4 @@ This repo contains files for the libft project for 42 cursus.
 ### TODO
 - [ ] Fix `ft_split` to return NULL when malloc fails in the middle of the string (one of the substr returns null.)
 - [ ] Optimize `ft_substr` to malloc the exact size for when length given is larger than the source string.
+- [x] Protect `ft_calloc` against multiplication overflow. Also, Malloc(0) will return a pointer that you can free.
