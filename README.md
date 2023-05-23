@@ -15,6 +15,8 @@ This repo contains files for the libft project for 42 cursus.
 
 `Updated` directory contains the changed files that are optimized after submission, therefore although theoritically better versions, it hasn't been thoroughly tested. It is intended to use for future projects and includes the bonus part natively.
 
+`Restrcutured` directory contains the version that includes ft_printf to use for future projects.
+
 ### TODO
 - [ ] Fix `ft_split` to return NULL when malloc fails in the middle of the string (one of the substr returns null.)
 - [ ] Optimize `ft_substr` to malloc the exact size for when length given is larger than the source string.

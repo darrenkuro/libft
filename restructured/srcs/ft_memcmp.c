@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
+/*   By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/21 09:08:23 by dlu               #+#    #+#             */
-/*   Updated: 2023/05/23 11:14:11 by dlu              ###   ########.fr       */
+/*   Created: 2023/05/23 11:22:12 by dlu               #+#    #+#             */
+/*   Updated: 2023/05/23 11:22:28 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	*ft_calloc(size_t count, size_t size)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	void	*ret;
-
-	if (size && count && count * size < size || count * size < count)
-		return (NULL);
-	ret = malloc(count * size);
-	if (!ret)
-		return (NULL);
-	ft_bzero(ret, count * size);
-	return (ret);
+	while (n > 0 && n--)
+		if (*(t_uc *) s1++ != *(t_uc *) s2++)
+			return (*(t_uc *)(s1 - 1) - *(t_uc *)(s2 - 1));
+	if (n == 0)
+		return (0);
+	return (*(t_uc *) s1 - *(t_uc *) s2);
 }

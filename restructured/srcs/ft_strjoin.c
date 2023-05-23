@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlu <dlu@42berlin.de>                      +#+  +:+       +#+        */
+/*   By: dlu<dlu@student.42berlin.de>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/21 09:08:23 by dlu               #+#    #+#             */
-/*   Updated: 2023/05/23 11:14:11 by dlu              ###   ########.fr       */
+/*   Created: 2023/04/21 10:07:07 by dlu               #+#    #+#             */
+/*   Updated: 2023/05/23 11:49:10 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	void	*ret;
+	char	*str;
+	size_t	len;
 
-	if (size && count && count * size < size || count * size < count)
+	if (!s1 || !s2)
 		return (NULL);
-	ret = malloc(count * size);
-	if (!ret)
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = (char *) malloc(len * sizeof(char));
+	if (!str)
 		return (NULL);
-	ft_bzero(ret, count * size);
-	return (ret);
+	ft_strlcpy(str, s1, len);
+	ft_strlcat(str, s2, len);
+	return (str);
 }
