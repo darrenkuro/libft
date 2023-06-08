@@ -6,11 +6,12 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2023/05/23 12:13:53 by dlu              ###   ########.fr        #
+#    Updated: 2023/06/08 09:32:03 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	libft.a
+OSINFO	:=	.info_build
 
 SRCDIR	:=	srcs
 _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
@@ -23,7 +24,7 @@ _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_lstnew.c ft_lstdelone.c ft_lstadd_front.c ft_lstadd_back.c \
 			ft_lstlast.c ft_lstsize.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 			ft_printf.c ft_printf_parse_format.c ft_printf_parse_nbr.c \
-			ft_printf_print.c ft_printf_utils.c
+			ft_printf_print.c ft_printf_utils.c ft_gnl.c ft_gnl_utils.c
 SRC		:=	$(addprefix, $(SRCDIR)/, $(_SRC))
 
 OBJDIR	:=	objs
@@ -32,7 +33,7 @@ OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
 CC		:=	cc
 AR		:=	ar rcs
 RM		:=	/bin/rm -f
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -g
 
 all: $(NAME)
 
@@ -46,7 +47,7 @@ clean:
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(OSINFO)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: dlu<dlu@student.42berlin.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 22:28:32 by dlu               #+#    #+#             */
-/*   Updated: 2023/05/23 11:36:01 by dlu              ###   ########.fr       */
+/*   Updated: 2023/06/08 09:34:24 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <unistd.h>
+# include <sys/types.h>
 
 typedef unsigned char		t_uc;
 typedef unsigned int		t_ui;
@@ -115,5 +116,15 @@ void	print_arg(va_list *args, int *count, t_format format);
 void	print_nbr(t_ll n, const char *base, int *count, t_format format);
 void	parse_nbr(t_ll n, const char *base, t_format *format);
 void	parse_format(char **s, va_list *args, t_format *format);
+
+/* Get next line. */
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+char	*get_next_line(int fd);
+int		nl_index(char *prev, int end);
+int		append_buffer(char **prev, char *buffer, ssize_t n);
 
 #endif
