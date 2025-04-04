@@ -6,14 +6,14 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2023/06/08 09:32:03 by dlu              ###   ########.fr        #
+#    Updated: 2025/04/04 06:39:23 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	libft.a
 OSINFO	:=	.info_build
 
-SRCDIR	:=	srcs
+SRCDIR	:=	src
 _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
 			ft_memset.c ft_memchr.c ft_memcpy.c ft_memmove.c ft_memcmp.c \
@@ -27,7 +27,7 @@ _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_printf_print.c ft_printf_utils.c ft_gnl.c ft_gnl_utils.c
 SRC		:=	$(addprefix, $(SRCDIR)/, $(_SRC))
 
-OBJDIR	:=	objs
+OBJDIR	:=	obj
 OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
 
 CC		:=	cc
