@@ -37,6 +37,8 @@ RM			:=	/bin/rm -f
 CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
 CPPFLAGS	:=	-I $(INCDIR)
 
+.DEFAULT_GOAL := all
+
 .PHONY: all
 all: $(NAME)
 
