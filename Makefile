@@ -6,12 +6,11 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/04/04 06:39:23 by dlu              ###   ########.fr        #
+#    Updated: 2025/06/20 22:25:39 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	libft.a
-OSINFO	:=	.info_build
 
 SRCDIR	:=	src
 _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
@@ -30,25 +29,35 @@ SRC		:=	$(addprefix, $(SRCDIR)/, $(_SRC))
 OBJDIR	:=	obj
 OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
 
-CC		:=	cc
-AR		:=	ar rcs
-RM		:=	/bin/rm -f
-CFLAGS	:=	-Wall -Wextra -Werror -g
+INCDIR	:=	include
 
+CC			:=	cc
+AR			:=	ar rcs
+RM			:=	/bin/rm -f
+CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
+CPPFLAGS	:=	-I $(INCDIR)
+
+.PHONY: all
 all: $(NAME)
+
+.PHONY: clean
+clean:
+	$(RM) -r $(OBJDIR)
+
+.PHONY: fclean
+fclean: clean
+	$(RM) $(NAME)
+
+.PHONY: re
+re: fclean all
+
+$(OBJDIR):
+	@mkdir -p $@
 
 $(NAME): $(OBJ)
 	$(AR) $@ $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $< -I .
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
-clean:
-	$(RM) $(OBJ)
-
-fclean: clean
-	$(RM) $(NAME) $(OSINFO)
-
-re: fclean all
-
-.PHONY: all clean fclean re
+-include $(OBJ:.o=.d)
