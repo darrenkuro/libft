@@ -6,7 +6,7 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/06/21 19:35:01 by dlu              ###   ########.fr        #
+#    Updated: 2025/06/22 00:52:59 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ RM			:=	/bin/rm -f
 CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
 CPPFLAGS	:=	-I $(INCDIR)
 
+PAD_WIDTH	?=	18	# Strlen counting escaping sequences
+
 .DEFAULT_GOAL := all
 
 .PHONY: all
@@ -46,13 +48,13 @@ all: $(TARGET)
 
 .PHONY: clean
 clean:
-	@printf "$(PROJECT) 🧹 Removing object files..."
+	@printf "%-*s 🧹 Removing object files..." $(PAD_WIDTH) "$(PROJECT)"
 	@$(RM) -r $(OBJDIR)
 	@echo " ✅ "
 
 .PHONY: fclean
 fclean: clean
-	@printf "$(PROJECT) 🗑️ Removing binary..."
+	@printf "%-*s 🗑️ Removing binary..." $(PAD_WIDTH) "$(PROJECT)"
 	@$(RM) $(TARGET)
 	@echo " ✅ "
 
@@ -60,17 +62,17 @@ fclean: clean
 re: fclean all
 
 $(OBJDIR):
-	@printf "$(PROJECT) 🛠️ Creating obj directory..."
+	@printf "%-*s 📁 Creating obj directory..." $(PAD_WIDTH) "$(PROJECT)"
 	@mkdir -p $@
 	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	@printf "$(PROJECT) 📦 Archiving object files into: $@"
+	@printf "%-*s 📦 Building archive: $@" $(PAD_WIDTH) "$(PROJECT)"
 	@$(AR) $@ $^
 	@echo " ✅ "
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@printf "$(PROJECT) ⚙️ Compiling: $<..."
+	@printf "%-*s ⚙️ Compiling: $<..." $(PAD_WIDTH) "$(PROJECT)"
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 	@echo " ✅ "
 
