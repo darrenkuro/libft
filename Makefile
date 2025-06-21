@@ -52,7 +52,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	@printf "$(PROJECT) 🧹 Removing binary..."
+	@printf "$(PROJECT) 🗑️ Removing binary..."
 	@$(RM) $(NAME)
 	@echo " ✅ "
 
