@@ -6,11 +6,12 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/06/20 22:25:39 by dlu              ###   ########.fr        #
+#    Updated: 2025/06/21 19:35:01 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:=	libft
+NAME	:=	libft
+PROJECT	:=	$$YELLOW[$(NAME)]$$RESET
 TARGET	:=	libft.a
 
 SRCDIR	:=	src
@@ -42,31 +43,35 @@ CPPFLAGS	:=	-I $(INCDIR)
 
 .PHONY: all
 all: $(TARGET)
-	@echo "🔨 [$(PROJECT)] Build complete: $(TARGET)"
 
 .PHONY: clean
 clean:
-	@printf "🧹 [$(PROJECT)] Removing object files... "
-	@$(RM) -r $(OBJDIR) 1>/dev/null || { echo "❌ Failed" >&2 && exit 1; }
-	@echo "✅ Success"
+	@printf "$(PROJECT) 🧹 Removing object files..."
+	@$(RM) -r $(OBJDIR)
+	@echo " ✅ "
 
 .PHONY: fclean
 fclean: clean
-	@printf "🧹 [$(PROJECT)] Removing archive file... "
-	@$(RM) $(NAME) 1>/dev/null || { echo "❌ Failed" >&2 && exit 1; }
-	@echo "✅ Success"
+	@printf "$(PROJECT) 🧹 Removing binary..."
+	@$(RM) $(NAME)
+	@echo " ✅ "
 
 .PHONY: re
 re: fclean all
-	@echo "🔁 [$(PROJECT)] Rebuild complete."
 
 $(OBJDIR):
+	@printf "$(PROJECT) 🛠️ Creating obj directory..."
 	@mkdir -p $@
+	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	$(AR) $@ $^
+	@printf "$(PROJECT) 📦 Archiving object files into: $@"
+	@$(AR) $@ $^
+	@echo " ✅ "
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+	@printf "$(PROJECT) ⚙️ Compiling: $<..."
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+	@echo " ✅ "
 
 -include $(OBJ:.o=.d)
