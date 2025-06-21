@@ -3,7 +3,7 @@
 <p align="center">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"/>
     <img src="https://img.shields.io/badge/score-125%2F100-3CB371?style=flat-square&logo=42&logoColor=white" alt="Score"/>
-    <img src="https://img.shields.io/badge/date-May%202%2C%202023-ff6984?style=flat-square&logo=Cachet&logoColor=white" alt="Date"/>
+    <img src="https://img.shields.io/badge/date-May%202nd%2C%202023-ff6984?style=flat-square&logo=Cachet&logoColor=white" alt="Date"/>
 </p>
 
 > This repo contains many reimplementation of general purpose functions of the standard C library. It is the first project of 42 common core. It is, however, the finalized version that goes beyond the original subject of libft, which includes source code of some of the following subjects as well, such as [get-next-line](https://github.com/darrenkuro/get-next-line), and [printf](https://github.com/darrenkuro/printf).
