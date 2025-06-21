@@ -10,7 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:=	libft.a
+PROJECT	:=	libft
+TARGET	:=	libft.a
 
 SRCDIR	:=	src
 _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
@@ -40,23 +41,29 @@ CPPFLAGS	:=	-I $(INCDIR)
 .DEFAULT_GOAL := all
 
 .PHONY: all
-all: $(NAME)
+all: $(TARGET)
+	@echo "🔨 [$(PROJECT)] Build complete: $(TARGET)"
 
 .PHONY: clean
 clean:
-	$(RM) -r $(OBJDIR)
+	@printf "🧹 [$(PROJECT)] Removing object files... "
+	@$(RM) -r $(OBJDIR) 1>/dev/null || { echo "❌ Failed" >&2 && exit 1; }
+	@echo "✅ Success"
 
 .PHONY: fclean
 fclean: clean
-	$(RM) $(NAME)
+	@printf "🧹 [$(PROJECT)] Removing archive file... "
+	@$(RM) $(NAME) 1>/dev/null || { echo "❌ Failed" >&2 && exit 1; }
+	@echo "✅ Success"
 
 .PHONY: re
 re: fclean all
+	@echo "🔁 [$(PROJECT)] Rebuild complete."
 
 $(OBJDIR):
 	@mkdir -p $@
 
-$(NAME): $(OBJ)
+$(TARGET): $(OBJ)
 	$(AR) $@ $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
