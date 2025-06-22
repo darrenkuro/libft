@@ -6,7 +6,7 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/06/22 00:52:59 by dlu              ###   ########.fr        #
+#    Updated: 2025/06/22 08:04:42 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,26 +48,31 @@ all: $(TARGET)
 
 .PHONY: clean
 clean:
-	@printf "%-*s 🧹 Removing object files..." $(PAD_WIDTH) "$(PROJECT)"
-	@$(RM) -r $(OBJDIR)
-	@echo " ✅ "
+	@if [ -d "$(OBJDIR)" ]; then \
+		printf "%-*s 🧹 Removing object files and obj directory..." \
+		$(PAD_WIDTH) "$(PROJECT)"; \
+		$(RM) -r "$(OBJDIR)"; \
+		echo " ✅ "; \
+	fi
 
 .PHONY: fclean
 fclean: clean
-	@printf "%-*s 🗑️ Removing binary..." $(PAD_WIDTH) "$(PROJECT)"
-	@$(RM) $(TARGET)
-	@echo " ✅ "
+	@ if [ -f "$(TARGET)" ]; then \
+		printf "%-*s 🗑️ Removing $(TARGET)..." $(PAD_WIDTH) "$(PROJECT)"; \
+		$(RM) $(TARGET); \
+		echo " ✅ "; \
+	fi
 
 .PHONY: re
 re: fclean all
 
 $(OBJDIR):
-	@printf "%-*s 📁 Creating obj directory..." $(PAD_WIDTH) "$(PROJECT)"
+	@printf "%-*s 📁 Creating: $@ directory..." $(PAD_WIDTH) "$(PROJECT)"
 	@mkdir -p $@
 	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	@printf "%-*s 📦 Building archive: $@" $(PAD_WIDTH) "$(PROJECT)"
+	@printf "%-*s 📦 Building: $@" $(PAD_WIDTH) "$(PROJECT)"
 	@$(AR) $@ $^
 	@echo " ✅ "
 
