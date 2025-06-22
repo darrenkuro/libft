@@ -127,4 +127,9 @@ char	*get_next_line(int fd);
 int		nl_index(char *prev, int end);
 int		append_buffer(char **prev, char *buffer, ssize_t n);
 
+/* Additional functions. */
+char	*ft_read_file(const char *filename);
+int		ft_strarrlen(char **arr);
+char	**ft_strarrcpy(char **arr);
+
 #endif
