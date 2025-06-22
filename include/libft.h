@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <sys/types.h>
 
 typedef unsigned char		t_uc;
@@ -30,6 +31,8 @@ typedef long long			t_ll;
 # define HEXL		"0123456789abcdef"
 # define NULL_STR	"(null)"
 # define NULL_PTR	"(nil)"
+# define TRUE		1
+# define FALSE		0
 
 /* Basic functions. */
 
