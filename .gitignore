@@ -37,9 +37,10 @@ result/
 
 # C/C++
 *.o
-*.out
+*.d
 *.a
 *.so
+*.out
 
 # Obsidian vault cache
 .obsidian/workspace
