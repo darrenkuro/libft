@@ -10,8 +10,22 @@
 #                                                                              #
 # **************************************************************************** #
 
+RESET	:=	$(shell tput sgr0)
+BOLD	:=	$(shell tput bold)
+DIM		:=	$(shell tput dim)
+SMUL	:=	$(shell tput smul)
+BLINK	:=	$(shell tput blink)
+REVERSE	:=	$(shell tput rev)
+RED		:=	$(shell tput setaf 1)
+GREEN	:=	$(shell tput setaf 2)
+YELLOW	:=	$(shell tput setaf 3)
+BLUE	:=	$(shell tput setaf 4)
+MAGENTA	:=	$(shell tput setaf 5)
+CYAN	:=	$(shell tput setaf 6)
+WHITE	:=	$(shell tput setaf 7)
+
 NAME	:=	libft
-PROJECT	:=	$$YELLOW[$(NAME)]$$RESET
+PROJECT	:=	$(YELLOW)$(BOLD)[$(NAME)]$(RESET)
 TARGET	:=	libft.a
 
 SRCDIR	:=	src
@@ -27,11 +41,9 @@ _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_printf.c ft_printf_parse_format.c ft_printf_parse_nbr.c \
 			ft_printf_print.c ft_printf_utils.c ft_gnl.c ft_gnl_utils.c \
 			ft_read_file.c ft_strarrlen.c ft_strarrcpy.c
-SRC		:=	$(addprefix, $(SRCDIR)/, $(_SRC))
-
+SRC		:=	$(addprefix $(SRCDIR)/, $(_SRC))
 OBJDIR	:=	obj
 OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
-
 INCDIR	:=	include
 
 CC			:=	cc
@@ -40,9 +52,9 @@ RM			:=	/bin/rm -f
 CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
 CPPFLAGS	:=	-I $(INCDIR)
 
-PAD_WIDTH	?=	18	# Strlen counting escaping sequences
-.DEFAULT_GOAL := all
-.SILENT:
+PAD_WIDTH	?=	0	# Strlen counting escaping sequences
+
+.DEFAULT_GOAL	:= all
 
 .PHONY: all
 all: $(TARGET)
@@ -82,4 +94,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 	echo " ✅ "
 
+.SILENT:
+.DELETE_ON_ERROR:	# Delete target build that's imcomplete
 -include $(OBJ:.o=.d)
