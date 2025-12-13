@@ -27,13 +27,16 @@ build/
 __pycache__/
 *.py[cod]
 *.egg-info/
+.venv/
 
 # Rust
 target/
 
+# Nix
+result/
+
 # C/C++
 *.o
-*.d
 *.out
 *.a
 *.so
@@ -52,3 +55,4 @@ target/
 !.github/workflows/
 !.github/ISSUE_TEMPLATE/
 !.github/PULL_REQUEST_TEMPLATE.md
+
