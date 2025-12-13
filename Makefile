@@ -52,7 +52,7 @@ RM			:=	/bin/rm -f
 CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
 CPPFLAGS	:=	-I $(INCDIR)
 
-PAD_WIDTH	?=	18	# Strlen counting escaping sequences
+PAD_WIDTH	?=	0	# Strlen counting escaping sequences, inherited
 
 .DEFAULT_GOAL	:= all
 
