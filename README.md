@@ -67,25 +67,7 @@ To include libft in another C project:
 git submodule add https://github.com/darrenkuro/libft.git libft
 git submodule update --init --recursive
 ```
-Then, in your project’s Makefile, link against it:
-```Makefile
-# Path to Libft
-LIBFT_DIR := libft
-LIBFT     := $(LIBFT_DIR)/libft.a
-
-# Build Libft before your target
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
-# Link it into your binary
-my_program: $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $@
-
-# Clean Libft together with your project
-clean:
-	rm -f $(OBJ)
-	$(MAKE) -C $(LIBFT_DIR) clean
-```
+Then, in your project’s Makefile, link against it according, see [push-swap](https://github.com/darrenkuro/push-swap) as an example.
 
 ---
 
