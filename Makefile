@@ -10,17 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-# === Project Metadata
+# ------------------------ Project Metadata
 NAME	:=	libft
 TARGET	:=	libft.a
 
-# === Directories
+# ------------------------ Directories
 SRCDIR	:=	src
 OBJDIR	:=	obj
 INCDIR	:=	include
 
-# === Files
-SRCS	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
+# ------------------------ Files
+_SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
 			ft_memset.c ft_memchr.c ft_memcpy.c ft_memmove.c ft_memcmp.c \
 			ft_calloc.c ft_itoa.c ft_atoi.c ft_bzero.c ft_strmapi.c \
@@ -32,26 +32,26 @@ SRCS	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_printf.c ft_printf_parse_format.c ft_printf_parse_nbr.c \
 			ft_printf_print.c ft_printf_utils.c ft_gnl.c ft_gnl_utils.c \
 			ft_read_file.c ft_strarrlen.c ft_strarrcpy.c
-SRC		:=	$(addprefix $(SRCDIR)/, $(SRCS))
-OBJ		:=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+SRC		:=	$(addprefix $(SRCDIR)/, $(_SRC))
+OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
 
-# === Toolchain & Flags
+# ------------------------ Toolchain & Flags
 CC		:=	cc
 AR		:=	ar rcs
 RM		:=	rm -f
 CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
 CPPFLAGS:=	-I $(INCDIR)
 
-# === Build Settings
+# ------------------------ Build Settings
 .DEFAULT_GOAL	:= all
 
-PADDING	?=	0 # Inherited label length for alignment
+PAD		?=	0 # Inherited label length for alignment
 DEBUG	?=	0
 ifeq ($(DEBUG),1)
 	CFLAGS	+=	-g
 endif
 
-# === Rules & Targets
+# ------------------------ Rules & Targets
 .PHONY: all
 all: $(TARGET)
 
