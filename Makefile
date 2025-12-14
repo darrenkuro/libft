@@ -10,26 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-RESET	:=	$(shell tput sgr0)
-BOLD	:=	$(shell tput bold)
-DIM		:=	$(shell tput dim)
-SMUL	:=	$(shell tput smul)
-BLINK	:=	$(shell tput blink)
-REVERSE	:=	$(shell tput rev)
-RED		:=	$(shell tput setaf 1)
-GREEN	:=	$(shell tput setaf 2)
-YELLOW	:=	$(shell tput setaf 3)
-BLUE	:=	$(shell tput setaf 4)
-MAGENTA	:=	$(shell tput setaf 5)
-CYAN	:=	$(shell tput setaf 6)
-WHITE	:=	$(shell tput setaf 7)
-
+# === Project Metadata
 NAME	:=	libft
-PROJECT	:=	$(YELLOW)$(BOLD)[$(NAME)]$(RESET)
 TARGET	:=	libft.a
 
+# === Directories
 SRCDIR	:=	src
-_SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
+OBJDIR	:=	obj
+INCDIR	:=	include
+
+# === Files
+SRCS	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_strlen.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
 			ft_memset.c ft_memchr.c ft_memcpy.c ft_memmove.c ft_memcmp.c \
 			ft_calloc.c ft_itoa.c ft_atoi.c ft_bzero.c ft_strmapi.c \
@@ -41,37 +32,41 @@ _SRC	:=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 			ft_printf.c ft_printf_parse_format.c ft_printf_parse_nbr.c \
 			ft_printf_print.c ft_printf_utils.c ft_gnl.c ft_gnl_utils.c \
 			ft_read_file.c ft_strarrlen.c ft_strarrcpy.c
-SRC		:=	$(addprefix $(SRCDIR)/, $(_SRC))
-OBJDIR	:=	obj
-OBJ		:=	$(addprefix $(OBJDIR)/, $(_SRC:.c=.o))
-INCDIR	:=	include
+SRC		:=	$(addprefix $(SRCDIR)/, $(SRCS))
+OBJ		:=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
-CC			:=	cc
-AR			:=	ar rcs
-RM			:=	/bin/rm -f
-CFLAGS		:=	-Wall -Wextra -Werror -g -MMD -MP
-CPPFLAGS	:=	-I $(INCDIR)
+# === Toolchain & Flags
+CC		:=	cc
+AR		:=	ar rcs
+RM		:=	rm -f
+CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
+CPPFLAGS:=	-I $(INCDIR)
 
-PAD_WIDTH	?=	0	# Strlen counting escaping sequences, inherited
-
+# === Build Settings
 .DEFAULT_GOAL	:= all
 
+PADDING	?=	0 # Inherited label length for alignment
+DEBUG	?=	0
+ifeq ($(DEBUG),1)
+	CFLAGS	+=	-g
+endif
+
+# === Rules & Targets
 .PHONY: all
 all: $(TARGET)
 
 .PHONY: clean
 clean:
-	if [ -d "$(OBJDIR)" ]; then \
-		printf "%-*s 🧹 Removing object files and obj directory..." \
-		$(PAD_WIDTH) "$(PROJECT)"; \
-		$(RM) -r "$(OBJDIR)"; \
+	@if [ -d "$(OBJDIR)" ]; then \
+		printf "%-*s 🧹 Removing $(OBJDIR)..." $(PADDING) "[$(NAME)]"; \
+		$(RM) -r $(OBJDIR); \
 		echo " ✅ "; \
 	fi
 
 .PHONY: fclean
 fclean: clean
-	if [ -f "$(TARGET)" ]; then \
-		printf "%-*s 🗑️ Removing $(TARGET)..." $(PAD_WIDTH) "$(PROJECT)"; \
+	@if [ -f "$(TARGET)" ]; then \
+		printf "%-*s 🗑️ Removing $(TARGET)..." $(PADDING) "[$(NAME)]"; \
 		$(RM) $(TARGET); \
 		echo " ✅ "; \
 	fi
@@ -80,20 +75,19 @@ fclean: clean
 re: fclean all
 
 $(OBJDIR):
-	printf "%-*s 📁 Creating: $@ directory..." $(PAD_WIDTH) "$(PROJECT)"
-	mkdir -p $@
-	echo " ✅ "
+	@printf "%-*s 📁 Creating: $@ directory..." $(PADDING) "[$(NAME)]"
+	@mkdir -p $@
+	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	printf "%-*s 📦 Building: $@" $(PAD_WIDTH) "$(PROJECT)"
-	$(AR) $@ $^
-	echo " ✅ "
+	@printf "%-*s 📦 Building: $@" $(PADDING) "[$(NAME)]"
+	@$(AR) $@ $^
+	@echo " ✅ "
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	printf "%-*s ⚙️ Compiling: $<..." $(PAD_WIDTH) "$(PROJECT)"
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	echo " ✅ "
+	@printf "%-*s ⚙️ Compiling: $<..." $(PADDING) "[$(NAME)]"
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+	@echo " ✅ "
 
-.SILENT:
-.DELETE_ON_ERROR:	# Delete target build that's imcomplete
--include $(OBJ:.o=.d)
+.DELETE_ON_ERROR:     # Delete target build that's incomplete
+-include $(OBJ:.o=.d) # Dependency injection
