@@ -7,7 +7,7 @@
     <img src="https://img.shields.io/badge/date-May%202nd%2C%202023-ff6984?style=flat-square&logo=Cachet&logoColor=white" alt="Date"/>
 </p>
 
-> A custom C library that re-implements essential standard library functions.
+> A reimplementation of essential C standard library functions.
 
 ---
 
