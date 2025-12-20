@@ -58,7 +58,7 @@ all: $(TARGET)
 .PHONY: clean
 clean:
 	@if [ -d "$(OBJDIR)" ]; then \
-		printf "%-*s 🧹 Removing $(OBJDIR)/..." $(PAD) "[$(NAME)]"; \
+		printf "%-*s Removing:  $(OBJDIR)/..." $(PAD) "[$(NAME)]"; \
 		$(RM) -r $(OBJDIR); \
 		echo " ✅ "; \
 	fi
@@ -66,7 +66,7 @@ clean:
 .PHONY: fclean
 fclean: clean
 	@if [ -f "$(TARGET)" ]; then \
-		printf "%-*s 🗑️ Removing $(TARGET)..." $(PAD) "[$(NAME)]"; \
+		printf "%-*s Removing:  $(TARGET)..." $(PAD) "[$(NAME)]"; \
 		$(RM) $(TARGET); \
 		echo " ✅ "; \
 	fi
@@ -75,17 +75,17 @@ fclean: clean
 re: fclean all
 
 $(OBJDIR):
-	@printf "%-*s 📂 Creating: $@ directory..." $(PAD) "[$(NAME)]"
+	@printf "%-*s Creating:  $@ directory..." $(PAD) "[$(NAME)]"
 	@mkdir -p $@
 	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	@printf "%-*s 📦 Building: $@" $(PAD) "[$(NAME)]"
+	@printf "%-*s Building:  $@" $(PAD) "[$(NAME)]"
 	@$(AR) $@ $^
 	@echo " ✅ "
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@printf "%-*s ⚙️ Compiling: $<..." $(PAD) "[$(NAME)]"
+	@printf "%-*s Compiling: $<..." $(PAD) "[$(NAME)]"
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 	@echo " ✅ "
 
