@@ -58,36 +58,36 @@ all: $(TARGET)
 .PHONY: clean
 clean:
 	@if [ -d "$(OBJDIR)" ]; then \
-		printf "%-*s 󰃢 Removing $(OBJDIR)/..." $(PAD) "[$(NAME)]"; \
+		printf "%-*s 🧹 Removing $(OBJDIR)/..." $(PAD) "[$(NAME)]"; \
 		$(RM) -r $(OBJDIR); \
-		echo "  "; \
+		echo " ✅ "; \
 	fi
 
 .PHONY: fclean
 fclean: clean
 	@if [ -f "$(TARGET)" ]; then \
-		printf "%-*s  Removing $(TARGET)..." $(PAD) "[$(NAME)]"; \
+		printf "%-*s 🗑️ Removing $(TARGET)..." $(PAD) "[$(NAME)]"; \
 		$(RM) $(TARGET); \
-		echo "  "; \
+		echo " ✅ "; \
 	fi
 
 .PHONY: re
 re: fclean all
 
 $(OBJDIR):
-	@printf "%-*s  Creating: $@ directory..." $(PAD) "[$(NAME)]"
+	@printf "%-*s 📂 Creating: $@ directory..." $(PAD) "[$(NAME)]"
 	@mkdir -p $@
-	@echo "  "
+	@echo " ✅ "
 
 $(TARGET): $(OBJ)
-	@printf "%-*s  Building: $@" $(PAD) "[$(NAME)]"
+	@printf "%-*s 📦 Building: $@" $(PAD) "[$(NAME)]"
 	@$(AR) $@ $^
-	@echo "  "
+	@echo " ✅ "
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@printf "%-*s  Compiling: $<..." $(PAD) "[$(NAME)]"
+	@printf "%-*s ⚙️ Compiling: $<..." $(PAD) "[$(NAME)]"
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@echo "  "
+	@echo " ✅ "
 
 .DELETE_ON_ERROR:     # Delete target build that's incomplete
 -include $(OBJ:.o=.d) # Dependency injection
