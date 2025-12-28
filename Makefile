@@ -6,7 +6,7 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/06/22 10:14:04 by dlu              ###   ########.fr        #
+#    Updated: 2025/12/28 11:43:13 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,10 @@ RM		:=	rm -f
 CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
 CPPFLAGS:=	-I $(INCDIR)
 
+# ------------------------ Colors
+RESET	:=	\033[0m
+GREEN 	:=	\033[32m
+
 # ------------------------ Build Settings
 .DEFAULT_GOAL	:= all
 
@@ -57,9 +61,9 @@ all: $(TARGET)
 .PHONY: clean
 clean:
 	@if [ -d "$(OBJDIR)" ]; then \
-		printf "%-*s Removing:  $(OBJDIR)/..." $(PAD) "[$(NAME)]"; \
+		printf "%-*s Removing:  $(OBJDIR)/ ..." $(PAD) "[$(NAME)]"; \
 		$(RM) -r $(OBJDIR); \
-		echo " ✅ "; \
+		echo " $(GREEN)[OK]$(RESET)"; \
 	fi
 
 .PHONY: fclean
@@ -67,26 +71,26 @@ fclean: clean
 	@if [ -f "$(TARGET)" ]; then \
 		printf "%-*s Removing:  $(TARGET)..." $(PAD) "[$(NAME)]"; \
 		$(RM) $(TARGET); \
-		echo " ✅ "; \
+		echo " $(GREEN)[OK]$(RESET)"; \
 	fi
 
 .PHONY: re
 re: fclean all
 
 $(OBJDIR):
-	@printf "%-*s Creating:  $@ directory..." $(PAD) "[$(NAME)]"
+	@printf "%-*s Creating:  $@/ ..." $(PAD) "[$(NAME)]"
 	@mkdir -p $@
-	@echo " ✅ "
+	@echo " $(GREEN)[OK]$(RESET)"
 
 $(TARGET): $(OBJ)
 	@printf "%-*s Building:  $@" $(PAD) "[$(NAME)]"
 	@$(AR) $@ $^
-	@echo " ✅ "
+	@echo " $(GREEN)[OK]$(RESET)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@printf "%-*s Compiling: $<..." $(PAD) "[$(NAME)]"
+	@printf "%-*s Compiling: $(notdir $<)..." $(PAD) "[$(NAME)]"
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@echo " ✅ "
+	@echo " $(GREEN)[OK]$(RESET)"
 
 .DELETE_ON_ERROR:     # Delete target build that's incomplete
 -include $(OBJ:.o=.d) # Dependency injection
