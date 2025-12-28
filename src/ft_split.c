@@ -18,7 +18,7 @@ static int	ft_split_count(char const *s, char c)
 	int	len;
 	int	i;
 
-	count = 1;
+	count = 0;
 	len = 0;
 	i = -1;
 	if (!s || !*s)
@@ -36,36 +36,71 @@ static int	ft_split_count(char const *s, char c)
 		return (count + 1);
 }
 
-static int	ft_split_create(char ***ret, char const *s, int i, int len)
+static char	**alloc_result(char const *s, char c)
 {
-	**ret = ft_substr(&s[i - len], 0, len);
-	(*ret)++;
+	char	**ret;
+
+	ret = malloc((ft_split_count(s, c) + 1) * sizeof(char *));
+	if (!ret)
+		return (NULL);
+	ret[0] = NULL;
+	return (ret);
+}
+
+static int	fill_result(char **ret, char const *s, char c, int k)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = 0;
+	while (s[++i])
+	{
+		if ((s[i] != c))
+			len++;
+		else if (len)
+		{
+			ret[k++] = ft_substr(s + i - len, 0, len);
+			if (!ret[k - 1])
+				return (0);
+			len = 0;
+		}
+	}
+	if (len)
+	{
+		ret[k++] = ft_substr(s + i - len, 0, len);
+		if (!ret[k - 1])
+			return (0);
+	}
+	ret[k] = NULL;
 	return (1);
 }
 
-char	**ft_split(char const *s, char c)
+static void	free_result(char **ret)
+{
+	int	i;
+
+	i = 0;
+	while (ret[i])
+		free(ret[i++]);
+	free(ret);
+}
+
+char	**ft_split(const char *s, char c)
 {
 	char	**ret;
-	int		len;
-	int		i;
+	int		k;
 
-	ret = (char **) malloc(ft_split_count(s, c) * sizeof(char *));
+	k = 0;
+	if (!s)
+		return (NULL);
+	ret = alloc_result(s, c);
 	if (!ret)
 		return (NULL);
-	*ret = NULL;
-	len = 0;
-	i = -1;
-	if (!s || !*s)
-		return (ret);
-	while (s[++i])
+	if (!fill_result(ret, s, c, k))
 	{
-		if (s[i] != c)
-			++len;
-		else if (len && s[i] == c && ft_split_create(&ret, s, i, len))
-			len = 0;
+		free_result(ret);
+		return (NULL);
 	}
-	if (s[i - 1] != c)
-		*ret++ = ft_substr(&s[i - len], 0, len);
-	*ret++ = NULL;
-	return (ret - ft_split_count(s, c));
+	return (ret);
 }
