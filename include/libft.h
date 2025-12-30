@@ -11,31 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-# define LIBFT_H
+#define LIBFT_H
 
-# include <stddef.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/types.h>
+#include <stddef.h>    // size_t
+#include <sys/types.h> // ssize_t
 
-typedef unsigned char		t_uc;
-typedef unsigned int		t_ui;
-typedef unsigned long long	t_ull;
-typedef long long			t_ll;
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 1024
+#endif
 
-# define DEC		"0123456789"
-# define HEXU		"0123456789ABCDEF"
-# define HEXL		"0123456789abcdef"
-# define NULL_STR	"(null)"
-# define NULL_PTR	"(nil)"
-# define TRUE		1
-# define FALSE		0
-
+/* clang-format off */
 /* Basic functions. */
-
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -71,67 +57,13 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
-/* Linked list. */
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-int		ft_lstsize(t_list *lst);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstnew(void *content);
-t_list	*ft_lstlast(t_list *lst);
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
-/* Printf. */
-
-typedef struct s_format
-{
-	t_ll	nbr;
-	char	type;
-	char	padding;
-	char	*num;
-	int		hash;
-	int		minus;
-	int		plus;
-	int		space;
-	int		dot;
-	int		zero;
-	int		width;
-	int		precision;
-	int		base;
-	int		signed_nbr;
-}	t_format;
-
-int		ft_printf(const char *s, ...);
-int		ft_strlenf(char *s, t_format format);
-int		print_padding(char c, int len);
-int		print_str(char *s, int *count, t_format format);
-void	print_char(char c, int *count, t_format format);
-void	print_ptr(void *p, int *count, t_format format);
-void	print_arg(va_list *args, int *count, t_format format);
-void	print_nbr(t_ll n, const char *base, int *count, t_format format);
-void	parse_nbr(t_ll n, const char *base, t_format *format);
-void	parse_format(char **s, va_list *args, t_format *format);
-
-/* Get next line. */
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-
-char	*get_next_line(int fd);
-int		nl_index(char *prev, int end);
-int		append_buffer(char **prev, char *buffer, ssize_t n);
+#include "ft_list.h"
+#include "ft_printf.h"
 
 /* Additional functions. */
 char	*ft_read_file(const char *filename);
+char	*get_next_line(int fd);
+
 int		ft_strarrlen(char **arr);
 char	**ft_strarrcpy(char **arr);
 

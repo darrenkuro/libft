@@ -24,15 +24,19 @@
 - Includes robust Makefile with dependency tracking (`-MMD`, `-MP`)
 - Fully modular architecture — ready to link with any C project
 - Extended with [get-next-line](https://github.com/darrenkuro/get-next-line) and [printf](https://github.com/darrenkuro/printf) for file I/O and formatted output
+- Archive branches with norm-comply version; updated to have better repo structure and more comprehensive function catalog
 
 ---
+
 ## 🛠️ Configuration
 
 ### Prerequisites
+
 - **Compiler:** `gcc` or `clang`
 - **Build tool:** `make`
 
 ### Installation & Usage
+
 ```bash
 # Clone the repository
 git clone https://github.com/darrenkuro/libft.git
@@ -46,6 +50,7 @@ gcc main.c libft.a -o main
 ```
 
 ### Examples & Demo
+
 ```c
 #include "libft.h"
 
@@ -62,11 +67,13 @@ int main(void) {
 #### Using Libft as a Git Submodule
 
 To include libft in another C project:
+
 ```bash
 # Add libft as a submodule inside your project
 git submodule add https://github.com/darrenkuro/libft.git libft
 git submodule update --init --recursive
 ```
+
 Then, in your project’s Makefile, link against it according, see [push-swap](https://github.com/darrenkuro/push-swap) as an example.
 
 ---
