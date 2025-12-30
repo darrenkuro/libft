@@ -6,7 +6,7 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/12/28 11:43:13 by dlu              ###   ########.fr        #
+#    Updated: 2025/12/30 07:55:43 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,23 +36,34 @@ OBJ	:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 # ------------------------ Toolchain & Flags
 CC		:=	cc
-AR		:=	ar rcs
+AR		:=	ar
+ARFLAGS	:=	rcs
 RM		:=	rm -f
 CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
 CPPFLAGS:=	-I $(INCDIR)
-
-# ------------------------ Colors
-RESET	:=	\033[0m
-GREEN 	:=	\033[32m
 
 # ------------------------ Build Settings
 .DEFAULT_GOAL	:= all
 
 PAD		?=	0 # Inherited label length for alignment
+PAD2	:=	10
 DEBUG	?=	0
+
 ifeq ($(DEBUG),1)
-	CFLAGS	+=	-g
+CFLAGS	+=	-g
 endif
+
+# ------------------------ Colors & Format
+RESET	:=	\033[0m
+GREEN 	:=	\033[32m
+
+define log
+printf "%-*s %-*s %s..." $(PAD) "[$(NAME)]" $(PAD2) "$(1)" "$(2)"
+endef
+
+define logok
+printf " %b\n" "$(GREEN)[OK]$(RESET)"
+endef
 
 # ------------------------ Rules & Targets
 .PHONY: all
@@ -61,36 +72,36 @@ all: $(TARGET)
 .PHONY: clean
 clean:
 	@if [ -d "$(OBJDIR)" ]; then \
-		printf "%-*s Removing:  $(OBJDIR)/ ..." $(PAD) "[$(NAME)]"; \
+		$(call log,Removing:,$(OBJDIR)/); \
 		$(RM) -r $(OBJDIR); \
-		echo " $(GREEN)[OK]$(RESET)"; \
+		$(call logok); \
 	fi
 
 .PHONY: fclean
 fclean: clean
 	@if [ -f "$(TARGET)" ]; then \
-		printf "%-*s Removing:  $(TARGET)..." $(PAD) "[$(NAME)]"; \
+		$(call log,Removing:,$(TARGET)); \
 		$(RM) $(TARGET); \
-		echo " $(GREEN)[OK]$(RESET)"; \
+		$(call logok); \
 	fi
 
 .PHONY: re
 re: fclean all
 
 $(OBJDIR):
-	@printf "%-*s Creating:  $@/ ..." $(PAD) "[$(NAME)]"
+	@$(call log,Creating:,$@/)
 	@mkdir -p $@
-	@echo " $(GREEN)[OK]$(RESET)"
+	@$(call logok)
 
 $(TARGET): $(OBJ)
-	@printf "%-*s Building:  $@" $(PAD) "[$(NAME)]"
-	@$(AR) $@ $^
-	@echo " $(GREEN)[OK]$(RESET)"
+	@$(call log,Building:,$@)
+	@$(AR) $(ARFLAGS) $@ $^
+	@$(call logok)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@printf "%-*s Compiling: $(notdir $<)..." $(PAD) "[$(NAME)]"
+	@$(call log,Compiling:,$(notdir $<))
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-	@echo " $(GREEN)[OK]$(RESET)"
+	@$(call logok)
 
 .DELETE_ON_ERROR:     # Delete target build that's incomplete
 -include $(OBJ:.o=.d) # Dependency injection
