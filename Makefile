@@ -6,7 +6,7 @@
 #    By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 12:01:08 by dlu               #+#    #+#              #
-#    Updated: 2025/12/30 09:53:40 by dlu              ###   ########.fr        #
+#    Updated: 2025/12/31 21:48:53 by dlu              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCDIR	:=	include
 
 # ------------------------ Files
 SRC	:=	ft_char.c ft_mem.c ft_io.c ft_str.c ft_strarr.c \
-		ft_num.c ft_printf.c ft_lst.c
+		ft_num.c ft_printf.c ft_lst.c ft_debug.c
 OBJ	:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 # ------------------------ Toolchain & Flags

@@ -64,6 +64,10 @@ void	ft_putnbr_fd(int n, int fd);
 char	*ft_read_file(const char *filename);
 char	*get_next_line(int fd);
 
+void	ft_printb(const void *ptr, size_t len);
+void	ft_printh(const void *ptr, size_t len);
+void	ft_printc(const void *ptr, size_t len);
+
 int		ft_strarrlen(char **arr);
 char	**ft_strarrcpy(char **arr);
 
