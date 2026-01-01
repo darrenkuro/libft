@@ -6,11 +6,10 @@
 /*   By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 10:58:18 by dlu               #+#    #+#             */
-/*   Updated: 2025/12/30 10:11:51 by dlu              ###   ########.fr       */
+/*   Updated: 2026/01/01 03:01:49 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "libft.h"
 #include <stdlib.h> // free, NULL
 #include <unistd.h> // write
@@ -18,7 +17,13 @@
 /* Helper function to replace write so it can write to memory as well. */
 static void emit(t_format *f, const char *s, size_t n) {
     if (f->mode == MODE_FD) {
-        write(f->fd, s, n);
+        size_t off = 0;
+        while (off < n) {
+            ssize_t ret = write(f->fd, s + off, n - off);
+            if (ret <= 0)
+                break;
+            off += (size_t)ret;
+        }
     } else {
         size_t i = 0;
         while (i < n && f->buf_pos + 1 < f->buf_size) {
@@ -28,46 +33,47 @@ static void emit(t_format *f, const char *s, size_t n) {
 }
 
 /* Return the length to be printed for a given string. */
-int ft_strlenf(char *s, t_format *f) {
-    int i;
+size_t ft_strlenf(const char *s, const t_format *f) {
+    size_t len = 0;
 
-    if (!s || (f->type == 's' && f->dot && f->precision == 0))
+    if (!s)
         return (0);
-    i = -1;
-    while (s[++i])
-        if (f->type == 's' && f->dot && i >= f->precision)
-            return (i);
-    return (i);
+
+    if (f->type == 's' && FLAG_HAS(f, F_DOT)) {
+        while (s[len] && len < (size_t)f->prec)
+            len++;
+        return (len);
+    }
+
+    while (s[len])
+        len++;
+
+    return (len);
 }
 
 /* Print the padding and return the length of the padding printed. */
-int print_padding(char c, int len, t_format *f) {
-    int i;
-
-    if (len <= 0)
-        return (0);
-    i = -1;
-    while (++i < len)
+size_t print_padding(char c, size_t len, t_format *f) {
+    for (size_t i = 0; i < len; i++)
         emit(f, &c, 1);
-    return (len);
+    return len;
 }
 
 /* Parse the flags in order. */
 static void parse_flags(char **s, t_format *f) {
     while (**s == '#' && (*s)++)
-        f->hash = 1;
+        FLAG_SET(f, F_HASH);
     while (**s == '-' && (*s)++)
-        f->minus = 1;
+        FLAG_SET(f, F_MINUS);
     while (**s == '+' && (*s)++)
-        f->plus = 1;
+        FLAG_SET(f, F_PLUS);
     while (**s == ' ' && (*s)++)
-        f->space = 1;
+        FLAG_SET(f, F_SPACE);
     while (**s == '0' && (*s)++)
-        f->zero = 1;
-    if (f->plus)
-        f->space = 0;
-    if (f->minus)
-        f->zero = 0;
+        FLAG_SET(f, F_ZERO);
+    if (FLAG_HAS(f, F_PLUS))
+        FLAG_CLR(f, F_SPACE);
+    if (FLAG_HAS(f, F_MINUS))
+        FLAG_CLR(f, F_ZERO);
 }
 
 /* Parse the width of the format. */
@@ -86,18 +92,18 @@ static void parse_width(char **s, va_list *args, t_format *f) {
 /* Parse the precision of the format. */
 static void parse_precision(char **s, va_list *args, t_format *f) {
     if (**s == '.') {
-        f->dot = 1;
+        FLAG_SET(f, F_DOT);
         (*s)++;
     }
     if (**s == '*') {
-        f->precision = va_arg(*args, int);
-        if (f->precision < 0)
-            f->precision = 0;
+        f->prec = va_arg(*args, int);
+        if (f->prec < 0)
+            f->prec = 0;
         (*s)++;
         return;
     }
     while (**s >= '0' && **s <= '9') {
-        f->precision = (f->precision * 10) + **s - '0';
+        f->prec = (f->prec * 10) + **s - '0';
         (*s)++;
     }
 }
@@ -108,204 +114,210 @@ void parse_format(char **s, va_list *args, t_format *f) {
     parse_width(s, args, f);
     parse_precision(s, args, f);
     f->type = **s;
-    if (**s == 'p' || **s == 'x' || **s == 'X')
+    if (ft_strchr("pxXm", **s))
         f->base = 16;
-    if (**s == 'd' || **s == 'i')
-        f->signed_nbr = 1;
-    if (f->zero)
+    if (ft_strchr("b", **s))
+        f->base = 2;
+    if (ft_strchr("di", **s))
+        FLAG_SET(f, F_SIGN);
+    if (FLAG_HAS(f, F_ZERO))
         f->padding = '0';
-    if (f->dot && f->zero)
+    if (FLAG_HAS(f, F_DOT) && FLAG_HAS(f, F_ZERO))
         f->padding = ' ';
     (*s)++;
 }
 
-/* Return the length of the nbr, excluding '-'. */
-static int nbr_len(long long n, t_format *f) {
-    int len;
-
-    len = 0;
-    if (n == 0)
-        return (++len);
-    while (f->signed_nbr && n != 0 && ++len)
-        n /= f->base;
-    while (!f->signed_nbr && n != 0 && ++len)
-        n = (unsigned long long)n / f->base;
-    return (len);
-}
-
 /* Return the length of the nbr string, excluding '\0'. */
-static int nbr_strlen(long long n, t_format *f) {
-    int len;
+static size_t nbr_strlen(long long n, t_format *f) {
+    size_t flen = 0, nlen = 0;
 
-    len = nbr_len(n, f);
-    if (f->dot && !f->precision && n == 0)
+    /* calculate format adjustment for nbr length */
+    if (FLAG_HAS(f, F_DOT) && !f->prec && n == 0)
         return (0);
-    if (len < f->precision)
-        len = f->precision;
-    if (f->signed_nbr && (n < 0 || f->plus || f->space))
-        ++len;
-    if ((((f->type == 'x' || f->type == 'X') && f->hash) || f->type == 'p') && n != 0)
-        len += 2;
-    return (len);
-}
+    if (FLAG_HAS(f, F_SIGN) && (n < 0 || FLAG_HAS(f, F_PLUS) || FLAG_HAS(f, F_SPACE)))
+        flen += 1;
+    if ((((ft_strchr("xX", f->type)) && FLAG_HAS(f, F_HASH)) || f->type == 'p') && n != 0)
+        flen += 2;
 
-/* Handle the prefixes (+/-/ /0x/0X) and the precision padding. */
-static void nbr_prefix(long long n, t_format *format, int len) {
-    if (format->signed_nbr) {
-        if (n < 0)
-            format->num[0] = '-';
-        else if (format->plus)
-            format->num[0] = '+';
-        else if (format->space)
-            format->num[0] = ' ';
-    }
-    if ((((format->type == 'x' || format->type == 'X') && format->hash) || format->type == 'p') &&
-        n != 0) {
-        format->num[0] = '0';
-        if (format->type == 'X')
-            format->num[1] = 'X';
-        else
-            format->num[1] = 'x';
-    }
-    while (--len >= 0 && !format->num[len])
-        format->num[len] = '0';
-}
+    /* calculate length of the number portion */
+    if (n == 0)
+        nlen += 1;
+    while (FLAG_HAS(f, F_SIGN) && n != 0 && ++nlen)
+        n /= f->base;
+    while (!FLAG_HAS(f, F_SIGN) && n != 0 && ++nlen)
+        n = (unsigned long long)n / f->base;
 
-/* Handle the co-occurance of flag '0' and prefix(+/-/ ). */
-static void nbr_flag_zero(t_format *format) {
-    if (!format->dot) {
-        if (format->zero && format->signed_nbr &&
-            (format->nbr < 0 || format->plus || format->space))
-            format->precision = format->width - 1;
-        if (format->zero && !format->signed_nbr)
-            format->precision = format->width;
-    }
+    if (nlen < (size_t)f->prec)
+        nlen = f->prec;
+    return (flen + nlen);
 }
 
 /* Load the number into string and store in the format to print later. */
-void parse_nbr(long long n, const char *base, t_format *format) {
-    int len;
+void parse_nbr(long long n, t_format *f) {
+    /* calculate length and add null terminator */
+    int len = nbr_strlen(n, f);
+    ft_memset(f->num, 0, len + 1);
+    f->num[len] = '\0';
 
-    nbr_flag_zero(format);
-    len = nbr_strlen(n, format) + 1;
-    format->num = ft_calloc(len, sizeof(char));
-    if (!format->num)
-        return;
-    format->num[--len] = '\0';
-    while (format->signed_nbr && n != 0 && --len >= 0) {
-        if (n > 0)
-            format->num[len] = base[n % format->base];
-        else
-            format->num[len] = base[-(n % format->base)];
-        n /= format->base;
+    /* check co-occurance of flag '0' and prefix(+/-/ ) */
+    if (!FLAG_HAS(f, F_DOT)) {
+        if (FLAG_HAS(f, F_ZERO) && FLAG_HAS(f, F_SIGN) &&
+            (n < 0 || FLAG_HAS(f, F_PLUS) || FLAG_HAS(f, F_SPACE)))
+            f->prec = f->width - 1;
+        if (FLAG_HAS(f, F_ZERO) && !FLAG_HAS(f, F_SIGN))
+            f->prec = f->width;
     }
-    while (!format->signed_nbr && n != 0 && --len >= 0) {
-        format->num[len] = base[(unsigned long long)n % format->base];
-        n = (unsigned long long)n / format->base;
+
+    /* handle the prefixes (+/-/ /0x/0X) and the precision padding */
+    if (FLAG_HAS(f, F_SIGN)) {
+        if (n < 0)
+            f->num[0] = '-';
+        else if (FLAG_HAS(f, F_PLUS))
+            f->num[0] = '+';
+        else if (FLAG_HAS(f, F_SPACE))
+            f->num[0] = ' ';
     }
-    nbr_prefix(format->nbr, format, len);
+
+    if ((((f->type == 'x' || f->type == 'X') && FLAG_HAS(f, F_HASH)) || f->type == 'p') && n != 0) {
+        f->num[0] = '0';
+        f->num[1] = f->type == 'X' ? 'X' : 'x';
+    }
+
+    const char *base = f->type == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
+
+    /* output number base on signs */
+    if (FLAG_HAS(f, F_SIGN)) {
+        while (n != 0 && --len >= 0) {
+            if (n > 0)
+                f->num[len] = base[n % f->base];
+            else
+                f->num[len] = base[-(n % f->base)];
+            n /= f->base;
+        }
+    } else {
+        while (n != 0 && --len >= 0) {
+            f->num[len] = base[(unsigned long long)n % f->base];
+            n = (unsigned long long)n / f->base;
+        }
+    }
+
+    /* add leading 0s */
+    while (--len >= 0 && !f->num[len])
+        f->num[len] = '0';
 }
 
 /* Reset the format parameters to the initial states. */
-static void reset_format(t_format *format) {
-    format->nbr = 0;
-    format->type = 0;
-    format->padding = ' ';
-    format->num = NULL;
-    format->hash = 0;
-    format->minus = 0;
-    format->plus = 0;
-    format->space = 0;
-    format->dot = 0;
-    format->zero = 0;
-    format->width = 0;
-    format->precision = 0;
-    format->base = 10;
-    format->signed_nbr = 0;
+static void reset_format(t_format *f) {
+    f->type = 0;
+    f->padding = ' ';
+    f->flags = 0;
+    f->width = 0;
+    f->prec = 0;
+    f->base = 10;
 }
 
 /* Handle the specifier 'c' and '%'. */
 void print_char(char c, int *count, t_format *f) {
-    if (!f->minus)
-        *count += print_padding(f->padding, f->width - 1, f);
+    size_t pad = (f->width > 1) ? (size_t)(f->width - 1) : 0;
+
+    if (!FLAG_HAS(f, F_MINUS))
+        *count += print_padding(f->padding, pad, f);
+
     emit(f, &c, 1);
     (*count)++;
-    if (f->minus)
-        *count += print_padding(f->padding, f->width - 1, f);
+
+    if (FLAG_HAS(f, F_MINUS))
+        *count += print_padding(f->padding, pad, f);
 }
 
 /* Handle the specifier 's', and the number portion of 'diuxX'. */
 int print_str(char *s, int *count, t_format *f) {
-    int len;
-    int i;
+    if (!s) {
+        if (!FLAG_HAS(f, F_DOT) || f->prec >= 6)
+            return print_str(NULL_STR, count, f);
+        return (0);
+    }
 
-    if (!s && !f->dot && print_str(NULL_STR, count, f))
-        return (0);
-    else if (!s && f->precision >= 6 && print_str(NULL_STR, count, f))
-        return (0);
-    len = ft_strlenf(s, f);
-    if (!f->minus)
-        *count += print_padding(f->padding, f->width - len, f);
-    i = -1;
-    while (++i < len)
+    size_t len = ft_strlenf(s, f);
+    size_t pad = (f->width > (int)len) ? (size_t)(f->width - len) : 0;
+
+    if (!FLAG_HAS(f, F_MINUS))
+        *count += print_padding(f->padding, pad, f);
+
+    for (size_t i = 0; i < len; i++)
         emit(f, &s[i], 1);
     *count += len;
-    if (f->minus)
-        *count += print_padding(f->padding, f->width - len, f);
+
+    if (FLAG_HAS(f, F_MINUS))
+        *count += print_padding(f->padding, pad, f);
     return (1);
 }
 
 /* Handle the specifier 'diuxX'. */
-void print_nbr(long long n, const char *base, int *count, t_format *f) {
-    f->nbr = n;
-    parse_nbr(f->nbr, base, f);
+void print_nbr(long long n, int *count, t_format *f) {
+    parse_nbr(n, f);
     print_str(f->num, count, f);
-    free(f->num);
 }
 
 /* Handle the specifier 'p'. */
 void print_ptr(void *p, int *count, t_format *f) {
     if (!p && print_str(NULL_PTR, count, f))
         return;
-    f->nbr = (long long)p;
-    parse_nbr(f->nbr, HEXL, f);
+    parse_nbr((long long)p, f);
     print_str(f->num, count, f);
-    free(f->num);
+}
+
+void print_mem(void *p, int *count, t_format *f) {
+    f->prec = 2;
+    const unsigned char *b = p;
+    for (int i = 0; i < 4; i++) {
+        parse_nbr((long long)b[i], f);
+        print_str(f->num, count, f);
+    }
+}
+
+void print_bin(void *p, int *count, t_format *f) {
+    f->prec = 8;
+    const unsigned char *b = p;
+
+    parse_nbr((long long)*b, f);
+    print_str(f->num, count, f);
 }
 
 /* Print the next argument based on its specifier. */
-void print_arg(va_list *args, int *count, t_format *format) {
-    if (format->type == 'c')
-        print_char(va_arg(*args, int), count, format);
-    else if (format->type == 's')
-        print_str(va_arg(*args, char *), count, format);
-    else if (format->type == 'p')
-        print_ptr(va_arg(*args, void *), count, format);
-    else if (format->type == 'd' || format->type == 'i')
-        print_nbr((long long)va_arg(*args, int), DEC, count, format);
-    else if (format->type == 'x')
-        print_nbr((long long)va_arg(*args, unsigned int), HEXL, count, format);
-    else if (format->type == 'X')
-        print_nbr((long long)va_arg(*args, unsigned int), HEXU, count, format);
-    else if (format->type == 'u')
-        print_nbr((long long)va_arg(*args, unsigned int), DEC, count, format);
-    else if (format->type == '%')
-        print_char('%', count, format);
+void print_arg(va_list *args, int *count, t_format *f) {
+    if (f->type == 'c')
+        print_char(va_arg(*args, int), count, f);
+    else if (f->type == 's')
+        print_str(va_arg(*args, char *), count, f);
+    else if (f->type == 'p')
+        print_ptr(va_arg(*args, void *), count, f);
+    else if (ft_strchr("di", f->type))
+        print_nbr((long long)va_arg(*args, int), count, f);
+    else if (ft_strchr("xXu", f->type))
+        print_nbr((long long)va_arg(*args, unsigned int), count, f);
+    else if (f->type == '%')
+        print_char('%', count, f);
+    else if (f->type == 'm')
+        print_mem(va_arg(*args, void *), count, f);
+    else if (f->type == 'b')
+        print_bin(va_arg(*args, void *), count, f);
 }
+// m = actual memory layout with precision as how many bytes (default 4)
+// b = in binary layout with precision as how many bytes (default 1)
 
 /* Parse the template string char by char. */
-static int parse(char *s, va_list *args, t_format *format) {
-    int count;
+static int parse(char *s, va_list *args, t_format *f) {
+    int count = 0;
 
-    count = 0;
     while (*s) {
         if (*s == '%') {
             ++s;
-            reset_format(format);
-            parse_format(&s, args, format);
-            print_arg(args, &count, format);
+            reset_format(f);
+            parse_format(&s, args, f);
+            print_arg(args, &count, f);
         } else {
-            emit(format, s++, 1);
+            emit(f, s++, 1);
             ++count;
         }
     }
