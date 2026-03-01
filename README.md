@@ -175,10 +175,10 @@ See [push-swap](https://github.com/darrenkuro/push-swap) for an example of linki
 
 ---
 
-<details>
-<summary><strong>Notes & Lessons</strong></summary>
+## Notes & Lessons
 
-### Makefile: Order-only prerequisite
+<details>
+<summary><strong>Makefile: Order-only prerequisite</strong></summary>
 
 ```Makefile
 # Ensure OBJDIR exists before compiling each .c file into a .o file.
@@ -188,7 +188,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
     $(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 ```
 
-### Makefile: Dependency tracking
+</details>
+
+<details>
+<summary><strong>Makefile: Dependency tracking</strong></summary>
 
 ```Makefile
 # -MMD and -MP flags automatically generate dependency files.
