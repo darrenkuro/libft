@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 08:10:02 by dlu               #+#    #+#             */
-/*   Updated: 2025/12/30 09:41:43 by dlu              ###   ########.fr       */
+/*   Updated: 2026/01/22 23:59:13 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int ft_memcmp(const void *s1, const void *s2, size_t n) {
     while (n > 0 && n--)
         if (*(unsigned char *)s1++ != *(unsigned char *)s2++)
             return (*(unsigned char *)(s1 - 1) - *(unsigned char *)(s2 - 1));
-    if (n == 0)
-        return (0);
-    return (*(unsigned char *)s1 - *(unsigned char *)s2);
+    // if (n == 0)
+    return (0);
+    // return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 void *ft_memchr(const void *s, int c, size_t n) {
