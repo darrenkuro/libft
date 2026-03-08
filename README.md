@@ -62,13 +62,15 @@ The library provides:
 | `ft_strmapi` | Map function over string |
 | `ft_striteri` | Iterate with function |
 
-## Getting Started
-
 ### Number Conversion
 | Function | Description |
 |----------|-------------|
 | `ft_atoi` | String to integer |
 | `ft_itoa` | Integer to string |
+
+## Getting Started
+
+### Prerequisites
 
 - A C compiler (`gcc` or `clang`)
 - GNU Make
