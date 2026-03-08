@@ -6,7 +6,7 @@
 /*   By: dlu <dlu@student.42berlin.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 08:32:28 by dlu               #+#    #+#             */
-/*   Updated: 2026/01/01 02:08:13 by dlu              ###   ########.fr       */
+/*   Updated: 2026/01/01 05:19:17 by dlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ typedef enum {
 } t_mode;
 
 enum {
-    F_HASH  = 1 << 0,
-    F_MINUS = 1 << 1,
-    F_PLUS  = 1 << 2,
-    F_SPACE = 1 << 3,
-    F_ZERO  = 1 << 4,
-    F_DOT   = 1 << 5,
-    F_SIGN  = 1 << 6,
+    F_HASH  = 1u << 0,
+    F_MINUS = 1u << 1,
+    F_PLUS  = 1u << 2,
+    F_SPACE = 1u << 3,
+    F_ZERO  = 1u << 4,
+    F_DOT   = 1u << 5,
+    F_SIGN  = 1u << 6,
 };
 
 typedef struct s_format

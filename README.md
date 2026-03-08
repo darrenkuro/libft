@@ -44,11 +44,31 @@ The library provides:
 - Modular architecture — include only what you need
 - Extensively tested against edge cases
 
----
+### Strings
+| Function | Description |
+|----------|-------------|
+| `ft_strlen` | String length |
+| `ft_strchr` | Find char in string |
+| `ft_strrchr` | Find char from end |
+| `ft_strncmp` | Compare n bytes |
+| `ft_strlcpy` | Safe string copy |
+| `ft_strlcat` | Safe string concatenate |
+| `ft_strdup` | Duplicate string |
+| `ft_substr` | Extract substring |
+| `ft_strjoin` | Concatenate two strings |
+| `ft_strtrim` | Trim characters from ends |
+| `ft_strnstr` | Find substring |
+| `ft_split` | Split string by delimiter |
+| `ft_strmapi` | Map function over string |
+| `ft_striteri` | Iterate with function |
 
 ## Getting Started
 
-### Prerequisites
+### Number Conversion
+| Function | Description |
+|----------|-------------|
+| `ft_atoi` | String to integer |
+| `ft_itoa` | Integer to string |
 
 - A C compiler (`gcc` or `clang`)
 - GNU Make
